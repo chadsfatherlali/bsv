@@ -35,18 +35,17 @@ func GetAllBlocks(ctx context.Context) (*entities.Blockchain, error) {
 }
 
 func GetLastBlock(ctx context.Context) (*entities.Block, error) {
-	collection := config.DB.Collection("blocks")
-
-	opts := options.FindOne().SetSort(bson.D{{Key: "index", Value: -1}})
-
 	var block entities.Block
 
+	opts := options.FindOne().SetSort(bson.D{{Key: "index", Value: -1}})
+	collection := config.DB.Collection("blocks")
 	err := collection.FindOne(ctx, bson.D{}, opts).Decode(&block)
 
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
 			return nil, nil
 		}
+
 		return nil, err
 	}
 

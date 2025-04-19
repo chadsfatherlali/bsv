@@ -29,7 +29,10 @@ func main() {
 	e := echo.New()
 
 	controllers.RegisterHealthRoutes(e)
-	controllers.RegisterBlockchainRoutes(e)
+
+	apiGroup := e.Group("/api")
+	controllers.RegisterVotersRoutes(apiGroup)
+	controllers.RegisterBlockchainRoutes(apiGroup)
 
 	e.Logger.Fatal(e.Start(":1323"))
 }
