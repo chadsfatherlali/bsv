@@ -8,9 +8,12 @@ import (
 	"context"
 	"log"
 
+	"github.com/go-playground/validator"
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 )
+
+var Validate = *validator.New()
 
 func main() {
 	err := godotenv.Load()
@@ -19,6 +22,7 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
+	config.InitValidator()
 	config.InitDB()
 
 	ctx, cancel := context.WithTimeout(context.Background(), constants.ContextTimeout)

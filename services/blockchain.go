@@ -8,6 +8,7 @@ import (
 	"log"
 	"time"
 
+	"github.com/google/uuid"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -99,10 +100,11 @@ func GenerateGenesisBlock(ctx context.Context) {
 	if err != nil {
 		log.Println("Error:", err)
 	} else if block == nil {
+		id := uuid.New().String()
 		genesisBlock := &entities.Block{
 			Index:     0,
 			Timestamp: time.Now().String(),
-			Data:      "Genesis Block",
+			Data:      id,
 			PrevHash:  "",
 		}
 

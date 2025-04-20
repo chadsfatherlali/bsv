@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"blockchain_votation_system/config"
 	"blockchain_votation_system/constants"
 	"blockchain_votation_system/entities"
 	"blockchain_votation_system/services"
@@ -35,6 +36,10 @@ func RegisterBlockchainRoutes(apiGroup *echo.Group) {
 		var block entities.Block
 
 		if err := c.Bind(&block); err != nil {
+			return utils.BadRequestErrorResponse(c, map[string]string{"error": err.Error()})
+		}
+
+		if err := config.Validate.Struct(block); err != nil {
 			return utils.BadRequestErrorResponse(c, map[string]string{"error": err.Error()})
 		}
 
