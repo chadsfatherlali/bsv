@@ -6,22 +6,12 @@ import (
 	"blockchain_votation_system/controllers"
 	"blockchain_votation_system/services"
 	"context"
-	"log"
 
-	"github.com/go-playground/validator"
-	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 )
 
-var Validate = *validator.New()
-
 func main() {
-	err := godotenv.Load()
-
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-
+	config.LoadEnvs()
 	config.InitValidator()
 	config.InitDB()
 
